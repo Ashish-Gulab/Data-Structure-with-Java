@@ -148,6 +148,27 @@ class LL
         }
     }
 
+    public void reverse()
+    {
+        if(head==null || head.next==null)
+        {
+            return;
+        }
+
+        Node prevNode=head;
+        Node currNode=head.next;
+        while(currNode!=null)
+        {
+            Node nextNode=currNode.next;
+            currNode.next=prevNode;
+            // Update
+            prevNode=currNode;
+            currNode=nextNode;
+        }
+        head.next=null;
+        head=prevNode;
+    }
+
     public static void main(String[] args)
     {
         LL list=new LL();
@@ -177,6 +198,9 @@ class LL
         list.printList();
 
         list.addMiddle(3,"new");
+        list.printList();
+
+        list.reverse();
         list.printList();
     }
 }
