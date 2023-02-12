@@ -142,6 +142,53 @@ class BinaryTrees
         return Math.max(leftHeight,rightHeight)+1;
     }
 
+    // TC:O(N^2)
+    public static int diameterOfTree(Node root)
+    {
+        if(root==null)
+        {
+            return 0;
+        }
+        int leftD=diameterOfTree(root.left);
+        int rightD=diameterOfTree(root.right);
+        int d3=height(root.left)+height(root.right)+1;
+
+        return Math.max(Math.max(leftD, rightD),d3);
+    }
+
+    // TC:O(N)
+    static class TreeInfo
+    {
+        int d;
+        int ht;
+
+        TreeInfo(int diameter, int height)
+        {
+            this.d=diameter;
+            this.ht=height;
+        }
+    }
+    public static TreeInfo diameter(Node root)
+    {
+        if(root==null)
+        {
+            return new TreeInfo(0,0);
+        }
+        TreeInfo left=diameter(root.left);
+        TreeInfo right=diameter(root.right);
+
+        int myHeight=Math.max(left.ht,right.ht)+1;
+
+        int diameter1=left.d;
+        int diameter2=right.d;
+        int diameter3=left.ht+right.ht+1;
+
+        int myDiameter=Math.max(Math.max(diameter1,diameter2),diameter3);
+
+        TreeInfo info=new TreeInfo(myDiameter,myHeight);
+        return info;
+    }
+
     public static void main(String[] args)
     {
         int nodes[]={1,2,4,-1,-1,5,-1,-1,3,-1,6,-1,-1};
@@ -167,5 +214,9 @@ class BinaryTrees
         System.out.println(sumOfNodes(root));
 
         System.out.println(height(root));
+
+        System.out.println(diameterOfTree(root));
+
+        System.out.println(diameter(root).d);
     }
 }
